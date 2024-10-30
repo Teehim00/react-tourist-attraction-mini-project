@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "./components/Navbar";
+import { Link } from "lucide-react";
 
 function HomePage() {
   const [trips, setTrips] = useState([]);
@@ -22,6 +23,16 @@ function HomePage() {
   useEffect(() => {
     getSearchs();
   }, [searchs]);
+
+  const copyToClipboard = (text) => {
+    console.log("text", text);
+    var textField = document.createElement("textarea");
+    textField.innerText = text;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand("copy");
+    textField.remove();
+  };
 
   return (
     <div className="min-h-screen p-4 w-full px-20 mt-10">
@@ -73,7 +84,15 @@ function HomePage() {
                 <p>
                   หมวด:<span className="mr-2"></span>
                   {trip.tags.map((tag, index) => (
-                    <span key={index} className="mr-2">
+                    <span
+                      key={index}
+                      className="mr-2"
+                      onClick={() =>
+                        setSearchs((prevSearch) =>
+                          `${prevSearch} ${tag}`.trim()
+                        )
+                      }
+                    >
                       {tag}
                     </span>
                   ))}
@@ -87,6 +106,15 @@ function HomePage() {
                       className="w-[120px] h-[100px] mr-[30px] rounded-xl mt-8"
                     />
                   ))}
+                </div>
+                <div className="flex justify-end mt-4 relative">
+                  <div className="flex items-center justify-center w-12 h-12 border-2 border-blue-500 rounded-full bg-white absolute bottom-5 right-12">
+                    <Link
+                      size={24}
+                      color="blue"
+                      onClick={() => copyToClipboard(trip.url)}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
