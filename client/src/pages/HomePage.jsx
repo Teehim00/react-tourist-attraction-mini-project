@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Navbar from "./components/Navbar";
 
-
 function HomePage() {
   const [trips, setTrips] = useState([]);
   const [searchs, setSearchs] = useState("");
